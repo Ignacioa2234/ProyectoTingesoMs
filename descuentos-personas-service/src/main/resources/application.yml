@@ -1,6 +1,7 @@
 spring:
   config:
     import: "configserver:http://localhost:8081"
+
   application:
     name: descuentos-personas-service
 
@@ -14,3 +15,6 @@ spring:
         client:
           service-url:
             defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 0
