@@ -1,16 +1,16 @@
 spring:
   config:
     import: "configserver:http://localhost:8081"
-
   application:
-    name: gateway-service
+    name: reportes-service
 
   cloud:
     config:
       uri: http://localhost:8081
       label: main
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+    netflix:
+      eureka:
+        client:
+          service-url:
+            defaultZone: http://localhost:8761/eureka

@@ -6,7 +6,12 @@ spring:
       server:
         git:
           default-label: main
-          uri:
+          uri: https://github.com/Ignacioa2234/ProyectoTingesoMs
           search-paths: config-data
   application:
     name: config-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

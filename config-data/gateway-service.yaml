@@ -1,31 +1,39 @@
 server:
+server:
   port: 8080
-  
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      default-zone: http://localhost:8761/eureka
-  instance:
-    hostname: localhost
+spring:
+  application:
+    name: gateway-service
 
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
       routes:
-        - id: student-service
-          uri: lb://student-service
+        - id: tarifas
+          uri: lb://tarifas-service
           predicates:
-            - Path=/student/**
-        - id: book-service
-          uri: lb://book-service
+            - Path=/tarifas/**
+        - id: reservas
+          uri: lb://reservas-service
           predicates:
-            - Path=/book/**
-        - id: pet-service
-          uri: lb://pet-service
+            - Path=/reservas/**
+        - id: descuentos-personas
+          uri: lb://descuentos-personas-service
           predicates:
-            - Path=/pet/**
+            - Path=/descuentos-personas/**
+        - id: descuentos-frecuentes
+          uri: lb://descuentos-frecuentes-service
+          predicates:
+            - Path=/descuentos-frecuentes/**
+        - id: tarifas-especiales
+          uri: lb://tarifas-especiales-service
+          predicates:
+            - Path=/tarifas-especiales/**
+        - id: rack
+          uri: lb://rack-service
+          predicates:
+            - Path=/rack/**
+        - id: reportes
+          uri: lb://reportes-service
+          predicates:
+            - Path=/reportes/**

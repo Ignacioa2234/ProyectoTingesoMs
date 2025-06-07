@@ -1,0 +1,16 @@
+spring:
+  config:
+    import: "configserver:http://localhost:8081"
+  application:
+    name: tarifas-especiales-service
+
+  cloud:
+    config:
+      uri: http://localhost:8081
+      label: main
+
+    netflix:
+      eureka:
+        client:
+          service-url:
+            defaultZone: http://localhost:8761/eureka
