@@ -3,14 +3,13 @@ server:
 spring:
   application:
     name: tarifas-service
-spring:
   datasource:
     url: jdbc:mysql://localhost:3306/tarifasdb
-    username: tu_usuario
-    password: tu_clave
+    username: root
+    password: Ignacito1.
   jpa:
     hibernate:
-      ddl-auto: update
+          ddl-auto: update
 eureka:
   client:
     service-url:
