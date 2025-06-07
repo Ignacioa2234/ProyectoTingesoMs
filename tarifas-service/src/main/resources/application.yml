@@ -1,6 +1,5 @@
 spring:
   config:
-    # Indica aquí dónde está tu Config Server
     import: configserver:http://localhost:8081
 
   application:

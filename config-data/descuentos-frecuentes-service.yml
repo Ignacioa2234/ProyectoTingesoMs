@@ -5,6 +5,14 @@ spring:
   application:
     name: descuentos-frecuentes-service
 
+  datasource:
+    url: jdbc:mysql://localhost:3306/descuentosfrecuentesdb
+    username: root
+    password: Ignacito1.
+  jpa:
+    hibernate:
+      ddl-auto: update
+
 eureka:
   client:
     service-url:
