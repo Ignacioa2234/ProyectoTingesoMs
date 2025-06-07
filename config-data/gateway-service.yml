@@ -1,39 +1,42 @@
 server:
-server:
   port: 8080
+
 spring:
   application:
     name: gateway-service
-
-spring:
   cloud:
     gateway:
-      routes:
-        - id: tarifas
-          uri: lb://tarifas-service
-          predicates:
-            - Path=/tarifas/**
-        - id: reservas
-          uri: lb://reservas-service
-          predicates:
-            - Path=/reservas/**
-        - id: descuentos-personas
-          uri: lb://descuentos-personas-service
-          predicates:
-            - Path=/descuentos-personas/**
-        - id: descuentos-frecuentes
-          uri: lb://descuentos-frecuentes-service
-          predicates:
-            - Path=/descuentos-frecuentes/**
-        - id: tarifas-especiales
-          uri: lb://tarifas-especiales-service
-          predicates:
-            - Path=/tarifas-especiales/**
-        - id: rack
-          uri: lb://rack-service
-          predicates:
-            - Path=/rack/**
-        - id: reportes
-          uri: lb://reportes-service
-          predicates:
-            - Path=/reportes/**
+          routes:
+            - id: tarifas
+              uri: lb://tarifas-service
+              predicates:
+                - Path=/tarifas/**
+            - id: reservas
+              uri: lb://reservas-service
+              predicates:
+                - Path=/reservas/**
+            - id: descuentos-personas
+              uri: lb://descuentos-personas-service
+              predicates:
+                - Path=/descuentos-personas/**
+            - id: descuentos-frecuentes
+              uri: lb://descuentos-frecuentes-service
+              predicates:
+                - Path=/descuentos-frecuentes/**
+            - id: tarifas-especiales
+              uri: lb://tarifas-especiales-service
+              predicates:
+                - Path=/tarifas-especiales/**
+            - id: rack
+              uri: lb://rack-service
+              predicates:
+                - Path=/rack/**
+            - id: reportes
+              uri: lb://reportes-service
+              predicates:
+                - Path=/reportes/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
