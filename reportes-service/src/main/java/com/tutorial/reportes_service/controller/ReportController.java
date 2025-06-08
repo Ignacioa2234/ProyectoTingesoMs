@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/reportes")
 public class ReportController {
-
     private final ReportService service;
 
     public ReportController(ReportService service) {
@@ -29,35 +28,9 @@ public class ReportController {
         return service.getReportsByType(type);
     }
 
-    @GetMapping("/laps")
-    public List<ReportEntity> getLapsReport(
-            @RequestParam("start")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            LocalDateTime start,
-            @RequestParam("end")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            LocalDateTime end
-    ) {
-        return service.getLapsTimeReport(start, end);
-    }
-
-    @GetMapping("/group-size")
-    public List<ReportEntity> getGroupSizeReport(
-            @RequestParam("start")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            LocalDateTime start,
-            @RequestParam("end")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            LocalDateTime end
-    ) {
-        return service.getPeopleCountReport(start, end);
-    }
-
     @PostMapping
     public ResponseEntity<ReportEntity> create(@RequestBody ReportEntity report) {
         ReportEntity saved = service.saveReport(report);
-        return ResponseEntity
-                .status(201)
-                .body(saved);
+        return ResponseEntity.status(201).body(saved);
     }
 }

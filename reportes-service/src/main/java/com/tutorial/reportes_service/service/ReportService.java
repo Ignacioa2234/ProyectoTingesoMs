@@ -4,7 +4,6 @@ import com.tutorial.reportes_service.entity.ReportEntity;
 import com.tutorial.reportes_service.repository.ReportRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,25 +15,18 @@ public class ReportService {
         this.reportRepository = reportRepository;
     }
 
-
-    public List<ReportEntity> getLapsTimeReport(LocalDateTime start, LocalDateTime end) {
-        return reportRepository.reportByLapsOrTime(start, end);
-    }
-
-    public List<ReportEntity> getPeopleCountReport(LocalDateTime start, LocalDateTime end) {
-        return reportRepository.reportByGroupSize(start, end);
-    }
-
+    /** Devuelve todos los reportes almacenados. */
     public List<ReportEntity> getAllReports() {
         return reportRepository.findAll();
     }
 
+    /** Filtra los reportes por un tipo concreto (“laps” o “group-size”). */
     public List<ReportEntity> getReportsByType(String type) {
         return reportRepository.findAllByReportType(type);
     }
 
+    /** Guarda un nuevo reporte en la base de datos. */
     public ReportEntity saveReport(ReportEntity report) {
-        report.setReportDate(LocalDateTime.now());
         return reportRepository.save(report);
     }
 }
