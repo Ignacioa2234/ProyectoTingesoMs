@@ -23,6 +23,17 @@ spring:
     hibernate:
           ddl-auto: update
 
+  mail:
+    host: smtp.tuservidor.com
+    port: 587
+    username: ignacio23012002@gmail.com
+    password: xcxr njdy lsqw atuo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+
 server:
   port: 0
 
