@@ -57,7 +57,7 @@ spring:
             - Method=POST
             - Path=/reportes
 
-        
+
         - id: reportes
           uri: lb://reportes-service
           predicates:
