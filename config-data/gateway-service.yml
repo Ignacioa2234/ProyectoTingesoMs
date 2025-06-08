@@ -11,59 +11,31 @@ spring:
         - id: tarifas
           uri: lb://tarifas-service
           predicates:
-            - Path=/tarifas/**
-          filters:
-            - StripPrefix=1
-
+            - Path=/tarifas,/tarifas/**
         - id: reservas
           uri: lb://reservas-service
           predicates:
-            - Path=/reservas/**
-          filters:
-            - StripPrefix=1
-
+            - Path=/reservas,/reservas/**
         - id: descuentos-personas
           uri: lb://descuentos-personas-service
           predicates:
-            - Path=/descuentos-personas/**
-          filters:
-            - StripPrefix=1
-
+            - Path=/descuentos-personas,/descuentos-personas/**
         - id: descuentos-frecuentes
           uri: lb://descuentos-frecuentes-service
           predicates:
-            - Path=/descuentos-frecuentes/**
-          filters:
-            - StripPrefix=1
-
+            - Path=/descuentos-frecuentes,/descuentos-frecuentes/**
         - id: tarifas-especiales
           uri: lb://tarifas-especiales-service
           predicates:
-            - Path=/tarifas-especiales/**
-          filters:
-            - StripPrefix=1
-
+            - Path=/tarifas-especiales,/tarifas-especiales/**
         - id: rack
           uri: lb://rack-service
           predicates:
-            - Path=/rack/**
-          filters:
-            - StripPrefix=1
-
-
-        - id: reportes-root
-          uri: lb://reportes-service
-          predicates:
-            - Method=POST
-            - Path=/reportes
-
-
+            - Path=/rack,/rack/**
         - id: reportes
           uri: lb://reportes-service
           predicates:
-            - Path=/reportes/**
-          filters:
-            - StripPrefix=1
+            - Path=/reportes,/reportes/**
 
 eureka:
   client:
