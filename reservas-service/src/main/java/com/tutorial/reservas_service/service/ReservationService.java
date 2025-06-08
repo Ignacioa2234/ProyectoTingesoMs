@@ -8,6 +8,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayOutputStream;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,22 +26,29 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final JavaMailSender mailSender;
 
+    @Value("${spring.mail.username}")
+    private String mailFrom;
+
+    /** Devuelve todas las reservas */
     public List<ReservationEntity> getAllReservations() {
         return reservationRepository.findAll();
     }
 
+    /** Busca una reserva por ID o lanza 404 */
     public ReservationEntity getReservationById(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Reservation not found"));
     }
 
+    /** Crea una reserva, genera y envía su comprobante PDF por email */
     public ReservationEntity createReservation(ReservationEntity reservation) {
         ReservationEntity saved = reservationRepository.save(reservation);
         sendVoucherEmailWithPdf(saved);
         return saved;
     }
 
+    /** Actualiza una reserva existente */
     public ReservationEntity updateReservation(Long id, ReservationEntity details) {
         ReservationEntity existing = getReservationById(id);
         existing.setStartTime(details.getStartTime());
@@ -52,6 +59,7 @@ public class ReservationService {
         return reservationRepository.save(existing);
     }
 
+    /** Borra una reserva o lanza 404 */
     public void deleteReservation(Long id) {
         if (!reservationRepository.existsById(id)) {
             throw new ResponseStatusException(
@@ -60,6 +68,7 @@ public class ReservationService {
         reservationRepository.deleteById(id);
     }
 
+    // --------------------------- PDF + Email ---------------------------
 
     private void sendVoucherEmailWithPdf(ReservationEntity r) {
         byte[] pdf = generateVoucherPdf(r);
@@ -68,13 +77,19 @@ public class ReservationService {
             try {
                 MimeMessage msg = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+
+                helper.setFrom(mailFrom);
                 helper.setTo(to);
                 helper.setSubject("Comprobante Reserva #" + r.getId());
                 helper.setText(buildVoucherText(r));
-                helper.addAttachment("voucher-" + r.getId() + ".pdf",
-                        new ByteArrayResource(pdf));
+                helper.addAttachment(
+                        "voucher-" + r.getId() + ".pdf",
+                        new ByteArrayResource(pdf)
+                );
+
                 mailSender.send(msg);
             } catch (MessagingException e) {
+                // Aquí puedes loguear o manejar errores sin parar el flujo
                 throw new RuntimeException("Error enviando voucher por email", e);
             }
         }
@@ -104,7 +119,7 @@ public class ReservationService {
                 .append("Fin:    ").append(r.getEndTime()).append("\n")
                 .append("Personas: ").append(r.getNumberOfPersons()).append("\n")
                 .append("Total: ").append(r.getTotalPrice()).append("\n")
-                .append("¡Gracias por tu preferencia!")
+                .append("¡Gracias por elegirnos!")
                 .toString();
     }
 }
