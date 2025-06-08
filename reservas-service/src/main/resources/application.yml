@@ -24,15 +24,18 @@ spring:
           ddl-auto: update
 
   mail:
-    host: smtp.tuservidor.com
+    host: smtp.gmail.com
     port: 587
     username: ignacio23012002@gmail.com
-    password: xcxr njdy lsqw atuo
+    password: tjrh eyro mcrg eedz
+    from: ignacio23012002@gmail.com
     properties:
       mail:
         smtp:
           auth: true
           starttls.enable: true
+          starttls.required: true
+          ssl.trust: smtp.gmail.com
 
 server:
   port: 0
