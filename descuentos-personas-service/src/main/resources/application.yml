@@ -1,6 +1,6 @@
 spring:
   config:
-    import: "configserver:http://localhost:8081"
+    import: "optional:configserver:http://localhost:8081"
 
   application:
     name: descuentos-personas-service
@@ -15,6 +15,13 @@ spring:
         client:
           service-url:
             defaultZone: http://localhost:8761/eureka
+  datasource:
+    url: jdbc:mysql://localhost:3306/descuentospersonasdb
+    username: root
+    password: Ignacito1.
+  jpa:
+    hibernate:
+          ddl-auto: update
 
 server:
   port: 0

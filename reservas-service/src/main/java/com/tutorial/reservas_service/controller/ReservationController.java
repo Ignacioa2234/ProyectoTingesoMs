@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reservas")
+@CrossOrigin(origins = "*")
 public class ReservationController {
 
     private final ReservationService service;
@@ -17,21 +18,32 @@ public class ReservationController {
         this.service = service;
     }
 
+    // 1) Obtener todas las reservas
     @GetMapping
-    public List<ReservationEntity> all() {
+    public List<ReservationEntity> getAll() {
         return service.getAllReservations();
     }
 
+    // 2) Buscar reservas por usuario (nombre extraído del email)
+    @GetMapping("/by-user")
+    public List<ReservationEntity> findByUser(@RequestParam("user") String user) {
+        return service.findByUsername(user);
+    }
+
+    // 3) Obtener una reserva por id
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationEntity> one(@PathVariable Long id) {
+    public ResponseEntity<ReservationEntity> getOne(@PathVariable Long id) {
         return ResponseEntity.ok(service.getReservationById(id));
     }
 
+    // 4) Crear nueva reserva
     @PostMapping
     public ResponseEntity<ReservationEntity> create(@RequestBody ReservationEntity r) {
-        return ResponseEntity.status(201).body(service.createReservation(r));
+        ReservationEntity saved = service.createReservation(r);
+        return ResponseEntity.status(201).body(saved);
     }
 
+    // 5) Actualizar reserva existente
     @PutMapping("/{id}")
     public ResponseEntity<ReservationEntity> update(
             @PathVariable Long id,
@@ -39,18 +51,10 @@ public class ReservationController {
         return ResponseEntity.ok(service.updateReservation(id, r));
     }
 
+    // 6) Borrar reserva
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteReservation(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/between")
-    public List<ReservationEntity> between(
-            @RequestParam("start") String start,
-            @RequestParam("end") String end) {
-        // parse your dates or adapt parameters to LocalDateTime
-        // return service.findReservationsBetween(parsedStart, parsedEnd);
-        return List.of(); // placeholder
     }
 }

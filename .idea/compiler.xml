@@ -15,6 +15,14 @@
         <module name="gateway-service" />
         <module name="tarifas-service" />
         <module name="reservas-service" />
+      </profile>
+      <profile name="Annotation profile for descuentos-personas-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
         <module name="descuentos-frecuentes-service" />
         <module name="descuentos-personas-service" />
       </profile>

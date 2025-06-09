@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
     List<ReservationEntity> findByStartTimeBetween(LocalDateTime start, LocalDateTime end);
+
+    List<ReservationEntity> findByGroupEmailsContaining(String username);
 }
