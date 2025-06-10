@@ -1,5 +1,3 @@
-// frontend/src/components/ReservationForm.jsx
-
 import React, { useState } from 'react';
 import ReservationService from '../services/reservation.service';
 
@@ -24,21 +22,47 @@ const ReservationForm = () => {
     e.preventDefault();
     setError(null);
 
-    // 1) Construimos el payload EXACTO que espera tu back:
+    // 1) Fecha de creación de la reserva (ISO completo sin milisegundos)
+    const reservationDate = new Date().toISOString().slice(0, 19);
+
+    // 2) Formato startTime y endTime con segundos
+    const startDateTime = `${startDate}T${startTime}:00`;
+    const endHour = (parseInt(startTime, 10) + 2) % 24; // reserva de +2 horas fija
+    const endDateTime = `${startDate}T${String(endHour).padStart(2, '0')}:00`;
+
+    // 3) Valor fijo o calculado para vuelTime (duración de la reserva)
+    const vuelTime = 2;
+
+    // 4) Filtrar emails válidos
+    const groupEmails = emails.filter(email => email.trim() !== '');
+
+    // 5) Campos adicionales de tu entidad.
+    //    Ajusta estos strings según inputs reales de tu UI.
+    const integrantesNombres = '';
+    const integrantesTarifaBase = '';
+    const integrantesDescGrupo = '';
+    const integrantesDescFrecuente = '';
+
+    // 6) Montar payload completo
     const payload = {
-      startTime: `${startDate}T${startTime}`,
-      // en tu entidad usas endTime, aquí asumimos 2h de reserva fija (ajustar según tu UI)
-      endTime: `${startDate}T${String((parseInt(startTime, 10) + 2) % 24).padStart(2, '0')}:00`,
+      reservationDate,
+      startTime: startDateTime,
+      endTime: endDateTime,
+      vuelTime,
       numberOfPersons: numPersons,
-      groupEmails: emails.filter(email => email.trim() !== '')
+      groupEmails,
+      integrantesNombres,
+      integrantesTarifaBase,
+      integrantesDescGrupo,
+      integrantesDescFrecuente
     };
 
     try {
       const resp = await ReservationService.create(payload);
       console.log('Reserva creada:', resp.data);
-      // aquí podrías limpiar el form o redirigir al usuario
+      // TODO: limpiar formulario o redirigir al usuario aquí
     } catch (err) {
-      console.error(err);
+      console.error(err.response?.data || err.message);
       setError('Error al crear la reserva.');
     }
   };
@@ -104,7 +128,7 @@ const ReservationForm = () => {
         + Añadir participante
       </button>
 
-      <hr/>
+      <hr />
 
       <button type="submit" className="btn btn-primary">
         Reservar
