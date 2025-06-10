@@ -1,28 +1,14 @@
-# Etapa 1: compilar con Maven
-FROM eclipse-temurin:17-jdk-jammy AS build
-WORKDIR /app
+# Usa Java 17 oficial
+FROM openjdk:17
 
-# Copiamos el wrapper y el pom para cachear dependencias
-COPY mvnw mvnw
-COPY .mvn .mvn
-COPY pom.xml .
+# Argumento para señalar el JAR que quieras copiar
+ARG JAR_FILE=target/*.jar
 
-# Descargamos dependencias sin compilar todo el proyecto
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+# Copia el JAR empaquetado desde tu carpeta target
+COPY ${JAR_FILE} app.jar
 
-# Copiamos el código fuente y construimos el JAR
-COPY src ./src
-RUN ./mvnw package -DskipTests -B
-
-# Etapa 2: runtime
-FROM eclipse-temurin:17-jre-jammy
-WORKDIR /app
-
-# Copiamos el JAR ya empacado
-COPY --from=build /app/target/*.jar config-service.jar
-
-# Exponemos el puerto que usará Spring Boot (el que tengas en application.yml)
+# Si quieres exponer un puerto dentro del contenedor (opcional, para la documentación)
 EXPOSE 8081
 
-# Arrancamos la aplicación
-ENTRYPOINT ["java","-jar","/app/config-service.jar"]
+# Comando de arranque
+ENTRYPOINT ["java","-jar","/app.jar"]

@@ -1,25 +1,14 @@
-# build stage
-FROM eclipse-temurin:17-jdk-jammy AS build
-WORKDIR /app
+# Usa Java 17 oficial
+FROM openjdk:17
 
-# Copiamos el wrapper y el POM para cachear dependencias
-COPY mvnw mvnw
-COPY .mvn .mvn
-COPY pom.xml .
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+# Argumento para señalar el JAR que quieras copiar
+ARG JAR_FILE=target/*.jar
 
-# Copiamos el código y construimos
-COPY src ./src
-RUN ./mvnw package -DskipTests -B
+# Copia el JAR empaquetado desde tu carpeta target
+COPY ${JAR_FILE} app.jar
 
-# runtime stage
-FROM eclipse-temurin:17-jre-jammy
-WORKDIR /app
-
-# Copiamos el JAR empaquetado
-COPY --from=build /app/target/*.jar reportes-service.jar
-
-# Exponemos el puerto (según tu bootstrap/config)
+# Si quieres exponer un puerto dentro del contenedor (opcional, para la documentación)
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","/app/reportes-service.jar"]
+# Comando de arranque
+ENTRYPOINT ["java","-jar","/app.jar"]

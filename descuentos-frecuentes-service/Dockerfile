@@ -1,16 +1,14 @@
-# build stage
-FROM eclipse-temurin:17-jdk-jammy AS build
-WORKDIR /app
-COPY mvnw mvnw
-COPY .mvn .mvn
-COPY pom.xml .
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
-COPY src ./src
-RUN ./mvnw package -DskipTests -B
+# Usa Java 17 oficial
+FROM openjdk:17
 
-# runtime stage
-FROM eclipse-temurin:17-jre-jammy
-WORKDIR /app
-COPY --from=build /app/target/*.jar descuentos-frecuentes-service.jar
+# Argumento para señalar el JAR que quieras copiar
+ARG JAR_FILE=target/*.jar
+
+# Copia el JAR empaquetado desde tu carpeta target
+COPY ${JAR_FILE} app.jar
+
+# Si quieres exponer un puerto dentro del contenedor (opcional, para la documentación)
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app/descuentos-frecuentes-service.jar"]
+
+# Comando de arranque
+ENTRYPOINT ["java","-jar","/app.jar"]

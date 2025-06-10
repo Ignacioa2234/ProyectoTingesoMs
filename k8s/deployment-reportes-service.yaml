@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reportes-service
+  namespace: karting
+  labels:
+    app: reportes-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reportes-service
+  template:
+    metadata:
+      labels:
+        app: reportes-service
+    spec:
+      containers:
+        - name: reportes-service
+          image: reportes-service:latest
+          imagePullPolicy: Never
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+          ports:
+            - name: http
+              containerPort: 8080

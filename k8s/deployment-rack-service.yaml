@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rack-service
+  namespace: karting
+  labels:
+    app: rack-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rack-service
+  template:
+    metadata:
+      labels:
+        app: rack-service
+    spec:
+      containers:
+        - name: rack-service
+          image: rack-service:latest
+          imagePullPolicy: Never
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+          ports:
+            - name: http
+              containerPort: 8080

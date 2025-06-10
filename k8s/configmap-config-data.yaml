@@ -1,0 +1,229 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-data
+  namespace: karting
+data:
+  # Config Server
+  config-service.yaml: |
+    server:
+      port: 8081
+    spring:
+      cloud:
+        config:
+          server:
+            git:
+              uri: https://github.com/Ignacioa2234/ProyectoTingesoMs
+              search-paths: config-data
+              default-label: main
+    eureka:
+      client:
+        register-with-eureka: false
+        fetch-registry: false
+
+  # Eureka
+  eureka-service.yaml: |
+    server:
+      port: 8761
+    spring:
+      application:
+        name: eureka-service
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+
+  # Gateway
+  gateway-service.yaml: |
+    server:
+      port: 8080
+    spring:
+      application:
+        name: gateway-service
+    spring:
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+
+  # Reservas
+  reservas-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: reservas-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/reservasdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update
+
+  # Tarifas
+  tarifas-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: tarifas-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/tarifasdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update
+
+  # Tarifas Especiales
+  tarifas-especiales-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: tarifas-especiales-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/tarifasespecialesdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update
+
+  # Descuentos Personas
+  descuentos-personas-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: descuentos-personas-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/descuentospersonasdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update
+
+  # Descuentos Frecuentes
+  descuentos-frecuentes-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: descuentos-frecuentes-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/descuentosfrecuentesdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update
+
+  # Rack
+  rack-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: rack-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/rackdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update
+
+  # Reportes
+  reportes-service.yaml: |
+    server:
+      port: 0
+    spring:
+      application:
+        name: reportes-service
+      cloud:
+        config:
+          import: configserver:http://config-service.karting.svc.cluster.local:8081
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+      instance:
+        prefer-ip-address: true
+    spring:
+      datasource:
+        url: jdbc:mysql://mysql:3306/reportesdb
+        username: appuser
+        password: password
+      jpa:
+        hibernate:
+          ddl-auto: update

@@ -1,10 +1,15 @@
 spring:
   application:
     name: reportes-service
-  config:
-    import: "configserver:http://localhost:8081"
+  cloud:
+    config:
+      import: "configserver:http://config-service.karting.svc.cluster.local:8081"
+      uri: http://config-service.karting.svc.cluster.local:8081
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+    netflix:
+      eureka:
+        client:
+          service-url:
+            defaultZone: http://eureka-service.karting.svc.cluster.local:8761/eureka
+        instance:
+          prefer-ip-address: true
