@@ -1,11 +1,12 @@
 spring:
   cloud:
     gateway:
+      # 1) CORS global
       globalcors:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - allowedOrigins: ["http://localhost:5173"]
+              - "http://localhost:5173"
             allowedMethods:
               - GET
               - POST
@@ -15,6 +16,8 @@ spring:
             allowedHeaders:
               - "*"
             allowCredentials: true
+
+      # 2) Rutas a microservicios
       routes:
 
         # Descuentos Frecuentes
@@ -59,7 +62,7 @@ spring:
           predicates:
             - Path=/rack/**
 
-# (Opcional) configuración Eureka, si usas Discovery
+# Si usas Eureka para discovery
 eureka:
   client:
     service-url:
