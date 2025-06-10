@@ -10,8 +10,6 @@ spring:
       server:
         git:
           uri: https://github.com/Ignacioa2234/ProyectoTingesoMs
-          username: Ignacioa2234
-          password: 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
           default-label: main
           search-paths: config-data
 
