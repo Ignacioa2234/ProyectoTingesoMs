@@ -112,6 +112,14 @@ public class ReservationService {
         // 9) Guardar antes de enviar el voucher
         ReservationEntity saved = reservationRepository.save(r);
 
+        String rackServiceUrl = "http://localhost:8086/rack/occupy" // cambia el puerto si es distinto en tu local
+
+                + "?day=" + saved.getStartTime().getDayOfWeek()
+                + "&startTime=" + saved.getStartTime().toLocalTime()
+                + "&reservationCode=" + saved.getReservationCode();
+
+        restTemplate.postForObject(rackServiceUrl, null, Object.class);
+
         // 10) Enviar e-mail (si falla el mail, la transacción se revierte)
         sendVoucherEmailWithPdf(saved);
 
