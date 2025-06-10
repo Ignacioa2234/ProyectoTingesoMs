@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class TarifaController {
 
     private final TarifaService tarifaService;

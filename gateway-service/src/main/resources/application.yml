@@ -1,7 +1,6 @@
 spring:
   cloud:
     gateway:
-      # 1) Configuración global de CORS para tu frontend en el puerto 5173
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -16,8 +15,6 @@ spring:
             allowedHeaders:
               - "*"
             allowCredentials: true
-
-      # 2) Rutas a los microservicios
       routes:
 
         # Descuentos Frecuentes

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/discount")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class SpecialDayController {
 
     private final SpecialDayService specialDayService;

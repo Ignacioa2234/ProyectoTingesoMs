@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/discount")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class FrequentDiscountController {
 
     private final FrequentDiscountService service;

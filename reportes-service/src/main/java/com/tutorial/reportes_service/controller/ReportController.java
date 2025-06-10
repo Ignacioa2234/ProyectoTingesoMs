@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reportes")
-@CrossOrigin(origins = "*")
 public class ReportController {
     private final ReportService service;
 

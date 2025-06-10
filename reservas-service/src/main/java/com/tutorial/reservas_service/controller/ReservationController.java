@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reservas")
-@CrossOrigin(origins = "*")
 public class ReservationController {
 
     private final ReservationService service;

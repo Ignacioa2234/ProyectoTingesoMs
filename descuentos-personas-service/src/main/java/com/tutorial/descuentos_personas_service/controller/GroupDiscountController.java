@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/discount")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class GroupDiscountController {
 
     private final GroupDiscountRepository repository;

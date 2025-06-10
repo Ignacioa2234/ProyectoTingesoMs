@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rack")
-@CrossOrigin(origins = "*")
 public class RackController {
 
     private final RackService service;
