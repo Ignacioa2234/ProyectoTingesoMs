@@ -112,7 +112,7 @@ public class ReservationService {
         // 9) Guardar antes de enviar el voucher
         ReservationEntity saved = reservationRepository.save(r);
 
-        String rackServiceUrl = "http://localhost:8086/rack/occupy" // cambia el puerto si es distinto en tu local
+        String rackServiceUrl = "http://localhost:8080/rack//initialize"
 
                 + "?day=" + saved.getStartTime().getDayOfWeek()
                 + "&startTime=" + saved.getStartTime().toLocalTime()
