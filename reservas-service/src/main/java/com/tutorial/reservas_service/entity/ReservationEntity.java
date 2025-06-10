@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "reservas")
+@Table(name = "reservations")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,46 +18,23 @@ public class ReservationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String reservationCode;
-
-    private LocalDateTime reservationDate;
-
+    @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
+
+    @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    private Integer vuelTime;
+    @Column(name = "num_persons", nullable = false)
+    private Integer numberOfPersons;
 
+    @Column(name = "total_price", nullable = false)
+    private Double totalPrice;
 
     @ElementCollection
     @CollectionTable(
-            name = "reserva_emails",
-            joinColumns = @JoinColumn(name = "reserva_id")
+            name = "reservation_group_emails",
+            joinColumns = @JoinColumn(name = "reservation_id")
     )
     @Column(name = "email")
     private List<String> groupEmails;
-
-    private String integrantesNombres;
-
-    private Integer numberOfPersons;
-
-    @Column(columnDefinition = "TEXT")
-    private String integrantesTarifaBase;
-    @Column(columnDefinition = "TEXT")
-    private String integrantesDescGrupo;
-    @Column(columnDefinition = "TEXT")
-    private String integrantesDescFrecuente;
-    @Column(columnDefinition = "TEXT")
-    private String integrantesDescCumple;
-    @Column(columnDefinition = "TEXT")
-    private String integrantesNeto;
-    @Column(columnDefinition = "TEXT")
-    private String integrantesIva;
-    @Column(columnDefinition = "TEXT")
-    private String integrantesTotal;
-
-    private Double totalNet;
-    private Double totalIva;
-    private Double totalAmount;
-
-    private Double totalPrice;
 }

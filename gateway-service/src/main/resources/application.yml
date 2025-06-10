@@ -2,65 +2,16 @@ spring:
   cloud:
     gateway:
       globalcors:
-        corsConfigurations:
+        cors-configurations:
           '[/**]':
-            allowedOrigins:
-              - allowedOrigins: ["*"]
-            allowedMethods:
+            allowed-origins:
+              - http://localhost:5173
+            allowed-methods:
               - GET
               - POST
               - PUT
               - DELETE
               - OPTIONS
-            allowedHeaders:
+            allowed-headers:
               - "*"
-            allowCredentials: true
-      routes:
-
-        # Descuentos Frecuentes
-        - id: descuentos-frecuentes
-          uri: lb://descuentos-frecuentes-service
-          predicates:
-            - Path=/descuentos-frecuentes/**
-
-        # Descuentos Personas
-        - id: descuentos-personas
-          uri: lb://descuentos-personas-service
-          predicates:
-            - Path=/descuentos-personas/**
-
-        # Tarifas Especiales
-        - id: tarifas-especiales
-          uri: lb://tarifas-especiales-service
-          predicates:
-            - Path=/tarifas-especiales/**
-
-        # Tarifas
-        - id: tarifas
-          uri: lb://tarifas-service
-          predicates:
-            - Path=/tarifas/**
-
-        # Reservas
-        - id: reservas
-          uri: lb://reservas-service
-          predicates:
-            - Path=/reservas/**
-
-        # Reportes
-        - id: reportes
-          uri: lb://reportes-service
-          predicates:
-            - Path=/reportes/**
-
-        # Rack Semanal
-        - id: rack
-          uri: lb://rack-service
-          predicates:
-            - Path=/rack/**
-
-# (Opcional) configuración Eureka, si usas Discovery
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+            allow-credentials: true
